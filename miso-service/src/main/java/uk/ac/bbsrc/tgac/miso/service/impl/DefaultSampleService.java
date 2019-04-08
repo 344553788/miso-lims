@@ -740,7 +740,7 @@ public class DefaultSampleService implements SampleService, PaginatedDataSource<
     target.setAlias(source.getAlias());
     target.setDescription(source.getDescription());
     target.setDiscarded(source.isDiscarded());
-    if (target.isDiscarded() || target.isDistributed()) {
+    if (source.isDiscarded() || source.isDiscarded()) {
       target.setVolume(0.0);
     } else {
       target.setVolume(source.getVolume());
@@ -761,11 +761,7 @@ public class DefaultSampleService implements SampleService, PaginatedDataSource<
     target.setDistributed(source.isDistributed());
     target.setDistributionDate(source.getDistributionDate());
     target.setDistributionRecipient(source.getDistributionRecipient());
-    if (target.isDistributed()) {
-      target.setLocationBarcode("SENT TO: " + target.getDistributionRecipient());
-    } else {
-      target.setLocationBarcode(source.getLocationBarcode());
-    }
+    target.setLocationBarcode(source.getLocationBarcode());
 
     if (isDetailedSample(target)) {
       DetailedSample dTarget = (DetailedSample) target;
