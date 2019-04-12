@@ -174,6 +174,21 @@
     <td><form:checkbox id="discarded" path="discarded"/></td>
   </tr>
   <tr>
+    <td><label for="distributed">Distributed:</label></td>
+    <td><form:checkbox id="distributed" path="distributed" onchange="Boxable.distributionChanged()" /></td>
+  </tr>
+  <tr>
+    <td><label for="distributionDatePicker">Distribution Date:</label></td>
+    <td>
+      <form:input path="distributionDate" id="distributionDatePicker" placeholder="YYYY-MM-DD"/>
+    </td>
+  </tr>
+  <tr>
+    <td><label for="distributionRecipient">Distribution Recipient:</label></td>
+    <td><form:input id="distributionRecipient" path="distributionRecipient"/>
+    </td>
+  </tr>
+  <tr>
     <td class="h">Location:</td>
     <td id="location">
       <c:if test="${!empty pool.box.locationBarcode}">${pool.box.locationBarcode},</c:if>

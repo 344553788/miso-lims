@@ -1,6 +1,6 @@
 package uk.ac.bbsrc.tgac.miso.service.impl;
 
-import static uk.ac.bbsrc.tgac.miso.core.util.LimsUtils.*;
+import static uk.ac.bbsrc.tgac.miso.core.util.LimsUtils.generateTemporaryName;
 import static uk.ac.bbsrc.tgac.miso.service.impl.ValidationUtils.*;
 
 import java.io.IOException;
@@ -209,10 +209,17 @@ public class DefaultPoolService implements PoolService, PaginatedDataSource<Pool
       managed.setIdentificationBarcode(LimsUtils.nullifyStringIfBlank(pool.getIdentificationBarcode()));
       managed.setPlatformType(pool.getPlatformType());
       managed.setQcPassed(pool.getQcPassed());
-      managed.setVolume(pool.getVolume());
-      managed.setVolumeUnits(pool.getVolumeUnits());
       managed.setDiscarded(pool.isDiscarded());
       managed.setCreationDate(pool.getCreationDate());
+      if (pool.isDiscarded() || pool.isDistributed()) {
+        managed.setVolume(0.0);
+      } else {
+        managed.setVolume(pool.getVolume());
+      }
+      managed.setVolumeUnits(pool.getVolume() == null ? null : pool.getVolumeUnits());
+      managed.setDistributed(pool.isDistributed());
+      managed.setDistributionDate(pool.getDistributionDate());
+      managed.setDistributionRecipient(pool.getDistributionRecipient());
 
       Set<String> originalItems = extractDilutionNames(managed.getPoolDilutions());
       loadPoolDilutions(pool, managed);
